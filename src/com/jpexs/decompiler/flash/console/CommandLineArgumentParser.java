@@ -3164,6 +3164,8 @@ public class CommandLineArgumentParser {
                 try {
                     try ( OutputStream fos = new BufferedOutputStream(new FileOutputStream(outFile))) {
                         swf.saveTo(fos);
+                        fos.flush();
+                        fos.close();
                         System.exit(0);
                     }
                 } catch (IOException e) {
