@@ -3115,6 +3115,7 @@ public class CommandLineArgumentParser {
                         } else {
                             List<ScriptPack> packs = swf.getAS3Packs();
 
+                            forLoop:
                             for (ScriptPack entry : packs) {
                                 if (entry.getClassPath().toString().equals(objectToReplace)) {
                                     found = true;
@@ -3124,6 +3125,7 @@ public class CommandLineArgumentParser {
                                     ScriptPack pack = entry;
                                     if (Path.getExtension(repFile).equals(".as")) {
                                         replaceAS3(repFile, repText, pack, air);
+                                        break forLoop;
                                     } else {
                                         // todo: get traits
                                         if (args.isEmpty()) {
@@ -3142,6 +3144,7 @@ public class CommandLineArgumentParser {
                                         }
 
                                         replaceAS3PCode(repText, abc, bodyIndex, trait);
+                                        break forLoop;
                                     }
                                 }
                             }
@@ -3161,6 +3164,7 @@ public class CommandLineArgumentParser {
                 try {
                     try ( OutputStream fos = new BufferedOutputStream(new FileOutputStream(outFile))) {
                         swf.saveTo(fos);
+                        System.exit(0);
                     }
                 } catch (IOException e) {
                     System.err.println("I/O error during writing");
